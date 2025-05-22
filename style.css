@@ -144,7 +144,6 @@ body {
   display: block;
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) scale(1);
 }
 
 .dropdown-content a {
