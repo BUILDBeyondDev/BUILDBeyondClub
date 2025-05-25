@@ -739,9 +739,18 @@ body {
   transition: color 0.18s;
 }
 
-.footer-contributor a:hover {
-  color: var(--dark-blue);
-  text-decoration: underline;
+.footer-partnership {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-partner-logo {
+  max-height: 70px;
+  width: auto;
+  display: block;
 }
 
 .about-hero-image {
@@ -995,6 +1004,20 @@ body {
     width: 1.3em;
     height: 1.3em;
   }
+
+  .footer-partnership {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-partner-logo {
+  max-height: 70px;
+  width: auto;
+  display: block;
+}
 
     .nav-links .join-container {
     width: 100%;
