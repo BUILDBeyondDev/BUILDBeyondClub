@@ -94,13 +94,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   includeHTML('footer-placeholder', 'footer.html');
 });
-
-
-// on DOMContentLoaded, pull in nav & footer
-document.addEventListener('DOMContentLoaded', () => {
-  includeHTML('nav-placeholder', 'nav.html');
-  includeHTML('footer-placeholder', 'footer.html');
-});
-
-
-
