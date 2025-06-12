@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize timeline (only runs if timeline exists on page)
-  if (document.querySelector('.timeline-container')) {
+  if (document.querySelector('.timeline-section')) {
     if (typeof window.initializeTimeline === 'function') {
       window.initializeTimeline();
     }
