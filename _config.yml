@@ -1,7 +1,7 @@
 title: "BUILD Beyond"
 description: "Dream Bigger. BUILD Beyond."
-baseurl: ""
-url: "https://yourusername.github.io"
+baseurl: "/BUILDBeyondClub"
+url: "https://buildbeyonddev.github.io"
 
 # Build settings
 markdown: kramdown
@@ -13,12 +13,6 @@ sass:
   sass_dir: _sass
   style: compressed
 
-# Collections
-collections:
-  pages:
-    output: true
-    permalink: /:name/
-
 # Exclude files from processing
 exclude:
   - README.md
@@ -26,7 +20,9 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - style.css
+  - script.js
 
-# Include files
-include:
-  - _pages
+# Force Jekyll processing
+future: true
+unpublished: false
