@@ -9,58 +9,73 @@ function initializeTimeline() {
     return; // Exit if timeline elements don't exist on this page
   }
 
-  // Calculate timeline boundaries
-  function getTimelineBounds() {
-    const sectionRect = timelineSection.getBoundingClientRect();
-    const sectionTop = window.pageYOffset + sectionRect.top;
-    const sectionBottom = sectionTop + sectionRect.height;
-    
-    return {
-      start: sectionTop + 200, // Start tracking after header
-      end: sectionBottom - 400  // End before footer
-    };
-  }
-
   // Update timeline based on main window scroll
   function updateTimeline() {
     const scrollTop = window.pageYOffset;
-    const bounds = getTimelineBounds();
+    const windowHeight = window.innerHeight;
     
-    // Calculate progress through timeline section
+    // Calculate progress through the entire timeline section
+    const sectionRect = timelineSection.getBoundingClientRect();
+    const sectionTop = scrollTop + sectionRect.top;
+    const sectionHeight = sectionRect.height;
+    
+    // Progress calculation based on how far we've scrolled through the timeline section
     let progress = 0;
-    if (scrollTop >= bounds.start && scrollTop <= bounds.end) {
-      progress = (scrollTop - bounds.start) / (bounds.end - bounds.start);
-    } else if (scrollTop > bounds.end) {
-      progress = 1;
+    if (scrollTop > sectionTop - windowHeight) {
+      progress = Math.min((scrollTop - sectionTop + windowHeight) / sectionHeight, 1);
     }
     
-    // Update progress bar
-    const progressPercent = Math.min(progress * 100, 100);
+    // Update progress bar height
+    const progressPercent = Math.max(0, Math.min(progress * 100, 100));
     timelineProgress.style.height = `${progressPercent}%`;
 
-    // Find which timeline item should be active based on scroll position
+    // Find which timeline item should be active based on viewport center
     let activeIndex = 0;
-    let minDistance = Infinity;
+    let bestScore = -Infinity;
 
     timelineItems.forEach((item, index) => {
       const itemRect = item.getBoundingClientRect();
-      const itemCenter = itemRect.top + itemRect.height / 2;
-      const windowCenter = window.innerHeight / 2;
-      const distance = Math.abs(windowCenter - itemCenter);
-
-      if (distance < minDistance && itemRect.top < window.innerHeight && itemRect.bottom > 0) {
-        minDistance = distance;
-        activeIndex = index;
+      const itemTop = itemRect.top;
+      const itemBottom = itemRect.bottom;
+      const itemCenter = itemTop + itemRect.height / 2;
+      const windowCenter = windowHeight / 2;
+      
+      // Item is visible in viewport
+      if (itemBottom > 0 && itemTop < windowHeight) {
+        // Calculate how close the item center is to window center
+        const distanceFromCenter = Math.abs(windowCenter - itemCenter);
+        
+        // Prefer items that are more centered and more visible
+        const visibilityScore = Math.min(
+          itemBottom - Math.max(itemTop, 0),
+          windowHeight
+        ) / windowHeight;
+        
+        const centerScore = 1 - (distanceFromCenter / windowHeight);
+        const totalScore = visibilityScore * 0.7 + centerScore * 0.3;
+        
+        if (totalScore > bestScore) {
+          bestScore = totalScore;
+          activeIndex = index;
+        }
       }
     });
 
-    // Update active states
+    // Update active states - remove all active classes first
     timelineItems.forEach((item, index) => {
-      item.classList.toggle('active', index === activeIndex);
+      if (index === activeIndex) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
     });
 
     timelineMarkers.forEach((marker, index) => {
-      marker.classList.toggle('active', index === activeIndex);
+      if (index === activeIndex) {
+        marker.classList.add('active');
+      } else {
+        marker.classList.remove('active');
+      }
     });
   }
 
@@ -73,28 +88,36 @@ function initializeTimeline() {
         const offsetTop = window.pageYOffset + itemRect.top - (window.innerHeight / 2) + (itemRect.height / 2);
         
         window.scrollTo({
-          top: offsetTop,
+          top: Math.max(0, offsetTop),
           behavior: 'smooth'
         });
       }
     });
   });
 
-  // Listen for scroll events on the main window
+  // Use throttled scroll listening for better performance
   let ticking = false;
   
-  window.addEventListener('scroll', () => {
+  function onScroll() {
     if (!ticking) {
-      requestAnimationFrame(updateTimeline);
+      requestAnimationFrame(() => {
+        updateTimeline();
+        ticking = false;
+      });
       ticking = true;
     }
-  });
+  }
+
+  // Listen for scroll events on the main window
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   // Initial update
   updateTimeline();
 
   // Handle window resize
-  window.addEventListener('resize', updateTimeline);
+  window.addEventListener('resize', () => {
+    setTimeout(updateTimeline, 100);
+  });
 }
 
 // Export for use in main.js
