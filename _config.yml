@@ -8,6 +8,9 @@ markdown: kramdown
 plugins:
   - jekyll-feed
 
+# Clean URLs configuration
+permalink: pretty
+
 # SCSS settings
 sass:
   sass_dir: _sass
