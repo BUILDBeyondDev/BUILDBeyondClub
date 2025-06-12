@@ -1,124 +1,188 @@
-// Timeline functionality - rewritten for natural page scrolling
-function initializeTimeline() {
-  const timelineSection = document.querySelector('.timeline-section');
-  const timelineProgress = document.querySelector('.timeline-progress');
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  const timelineMarkers = document.querySelectorAll('.timeline-marker');
+// Timeline Automation with Folder Link Image Support
 
-  if (!timelineSection || !timelineProgress || !timelineItems.length || !timelineMarkers.length) {
-    return; // Exit if timeline elements don't exist on this page
-  }
-
-  // Update timeline based on main window scroll
-  function updateTimeline() {
-    const scrollTop = window.pageYOffset;
-    const windowHeight = window.innerHeight;
-    
-    // Calculate progress through the entire timeline section
-    const sectionRect = timelineSection.getBoundingClientRect();
-    const sectionTop = scrollTop + sectionRect.top;
-    const sectionHeight = sectionRect.height;
-    
-    // Progress calculation based on how far we've scrolled through the timeline section
-    let progress = 0;
-    if (scrollTop > sectionTop - windowHeight) {
-      progress = Math.min((scrollTop - sectionTop + windowHeight) / sectionHeight, 1);
-    }
-    
-    // Update progress bar height
-    const progressPercent = Math.max(0, Math.min(progress * 100, 100));
-    timelineProgress.style.height = `${progressPercent}%`;
-
-    // Find which timeline item should be active based on viewport center
-    let activeIndex = 0;
-    let bestScore = -Infinity;
-
-    timelineItems.forEach((item, index) => {
-      const itemRect = item.getBoundingClientRect();
-      const itemTop = itemRect.top;
-      const itemBottom = itemRect.bottom;
-      const itemCenter = itemTop + itemRect.height / 2;
-      const windowCenter = windowHeight / 2;
-      
-      // Item is visible in viewport
-      if (itemBottom > 0 && itemTop < windowHeight) {
-        // Calculate how close the item center is to window center
-        const distanceFromCenter = Math.abs(windowCenter - itemCenter);
-        
-        // Prefer items that are more centered and more visible
-        const visibilityScore = Math.min(
-          itemBottom - Math.max(itemTop, 0),
-          windowHeight
-        ) / windowHeight;
-        
-        const centerScore = 1 - (distanceFromCenter / windowHeight);
-        const totalScore = visibilityScore * 0.7 + centerScore * 0.3;
-        
-        if (totalScore > bestScore) {
-          bestScore = totalScore;
-          activeIndex = index;
-        }
-      }
-    });
-
-    // Update active states - remove all active classes first
-    timelineItems.forEach((item, index) => {
-      if (index === activeIndex) {
-        item.classList.add('active');
-      } else {
-        item.classList.remove('active');
-      }
-    });
-
-    timelineMarkers.forEach((marker, index) => {
-      if (index === activeIndex) {
-        marker.classList.add('active');
-      } else {
-        marker.classList.remove('active');
-      }
-    });
-  }
-
-  // Handle marker clicks - scroll to corresponding timeline item
-  timelineMarkers.forEach((marker, index) => {
-    marker.addEventListener('click', () => {
-      const targetItem = timelineItems[index];
-      if (targetItem) {
-        const itemRect = targetItem.getBoundingClientRect();
-        const offsetTop = window.pageYOffset + itemRect.top - (window.innerHeight / 2) + (itemRect.height / 2);
-        
-        window.scrollTo({
-          top: Math.max(0, offsetTop),
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-
-  // Use throttled scroll listening for better performance
-  let ticking = false;
+/**
+ * Read timeline data from Google Sheet (folder link approach)
+ */
+function getTimelineData() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName(CONFIG.SHEET_NAME);
   
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateTimeline();
-        ticking = false;
-      });
-      ticking = true;
-    }
+  if (!sheet) {
+    throw new Error(`Sheet named "${CONFIG.SHEET_NAME}" not found. Make sure you have a sheet tab named "Timeline"`);
   }
-
-  // Listen for scroll events on the main window
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Initial update
-  updateTimeline();
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    setTimeout(updateTimeline, 100);
-  });
+  
+  const data = sheet.getDataRange().getValues();
+  console.log('Raw sheet data:', data);
+  
+  // Skip header row and filter out empty rows
+  const timelineData = data.slice(1).map(row => ({
+    yearId: row[0],
+    displayDate: row[1],
+    eventType: row[2],
+    title: row[3],
+    description: row[4],
+    folderLink: row[5] || null // Google Drive folder link
+  })).filter(item => item.yearId && item.yearId.toString().trim()); // Remove empty rows
+  
+  if (timelineData.length === 0) {
+    throw new Error('No timeline data found in the sheet. Make sure you have data in rows below the header.');
+  }
+  
+  // Get images for each timeline item
+  const timelineWithImages = timelineData.map(item => ({
+    ...item,
+    images: item.folderLink ? getImagesFromFolderLink(item.folderLink) : []
+  }));
+  
+  return timelineWithImages;
 }
 
-// Export for use in main.js
-window.initializeTimeline = initializeTimeline;
+/**
+ * Get all images from a Google Drive folder using its sharing link
+ */
+function getImagesFromFolderLink(folderLink) {
+  try {
+    if (!folderLink || typeof folderLink !== 'string') {
+      return [];
+    }
+    
+    // Extract folder ID from Google Drive folder link
+    let folderId = null;
+    
+    // Try different Google Drive URL formats
+    const folderIdMatch1 = folderLink.match(/\/folders\/([a-zA-Z0-9-_]+)/);
+    const folderIdMatch2 = folderLink.match(/id=([a-zA-Z0-9-_]+)/);
+    
+    if (folderIdMatch1) {
+      folderId = folderIdMatch1[1];
+    } else if (folderIdMatch2) {
+      folderId = folderIdMatch2[1];
+    } else {
+      console.log(`Could not extract folder ID from: ${folderLink}`);
+      return [];
+    }
+    
+    // Get the folder by ID
+    const folder = DriveApp.getFolderById(folderId);
+    const files = folder.getFiles();
+    const images = [];
+    
+    // Get all image files from the folder
+    while (files.hasNext() && images.length < 4) { // Limit to 4 images max
+      const file = files.next();
+      const mimeType = file.getBlob().getContentType();
+      
+      // Check if it's an image file
+      if (mimeType.startsWith('image/')) {
+        // Make file publicly viewable and get direct link
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        const fileId = file.getId();
+        const directUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+        
+        images.push({
+          name: file.getName(),
+          url: directUrl
+        });
+      }
+    }
+    
+    console.log(`Found ${images.length} images in folder: ${folderId}`);
+    return images;
+    
+  } catch (error) {
+    console.error(`Error getting images from folder link "${folderLink}":`, error);
+    return [];
+  }
+}
+
+/**
+ * Generate image gallery HTML
+ */
+function generateImageGallery(images) {
+  if (!images || images.length === 0) return '';
+  
+  const galleryImages = images.map((img, index) => 
+    `<img src="${img.url}" alt="${img.name}" class="timeline-gallery-image" loading="lazy" title="${img.name}">`
+  ).join('');
+  
+  return `
+    <div class="timeline-image-gallery">
+      ${galleryImages}
+    </div>`;
+}
+
+/**
+ * Generate the complete timeline HTML
+ */
+function generateTimelineHTML(timelineData) {
+  // Generate markers HTML
+  const markersHTML = timelineData.map((item, index) => {
+    const position = 10 + (index * 75 / Math.max(timelineData.length - 1, 1));
+    const activeClass = index === 0 ? ' active' : '';
+    
+    return `        <div class="timeline-marker${activeClass}" data-year="${item.yearId}" style="top: ${position}%;">
+          <div class="timeline-year">${item.displayDate}</div>
+        </div>`;
+  }).join('\n');
+
+  // Generate content HTML with images
+  const contentHTML = timelineData.map((item, index) => {
+    const activeClass = index === 0 ? ' active' : '';
+    const imageGallery = generateImageGallery(item.images);
+    
+    return `    <div class="timeline-item${activeClass}" data-year="${item.yearId}">
+      <div class="event-tag">${item.eventType}</div>
+      <h3>${item.title}</h3>
+      <p>${item.description}</p>${imageGallery ? '\n      ' + imageGallery : ''}
+    </div>`;
+  }).join('\n\n');
+
+  // Complete HTML template
+  return `---
+layout: default
+title: "Timeline"
+---
+
+<div class="timeline-section">
+  <h2>Our Timeline</h2>
+  
+  <!-- Fixed sidebar with timeline markers -->
+  <div class="timeline-sidebar">
+    <div class="timeline-track">
+      <div class="timeline-progress"></div>
+      <div class="timeline-markers">
+${markersHTML}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content area that flows with page scroll -->
+  <div class="timeline-content">
+${contentHTML}
+  </div>
+</div>`;
+}
+
+/**
+ * Test function specifically for folder links
+ */
+function testFolderLinks() {
+  console.log('Testing folder link access...');
+  
+  try {
+    const timelineData = getTimelineData();
+    
+    timelineData.forEach(item => {
+      console.log(`Event: ${item.title}`);
+      console.log(`Folder Link: ${item.folderLink}`);
+      console.log(`Images found: ${item.images.length}`);
+      item.images.forEach(img => {
+        console.log(`  - ${img.name}: ${img.url}`);
+      });
+      console.log('---');
+    });
+    
+  } catch (error) {
+    console.error('Error testing folder links:', error);
+  }
+}
