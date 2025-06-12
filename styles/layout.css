@@ -1,0 +1,369 @@
+/* HERO SECTIONS */
+.hero-top {
+  display: flex;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+}
+
+.hero-image {
+  flex: 1;
+  background: url('../images/BostonCity.jpg') center/cover no-repeat;
+}
+
+.hero-text {
+  position: relative;
+  flex: 1;
+  background: var(--light);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 3rem;
+  margin-top: 10rem;
+}
+
+.hero-text h1 {
+  font-size: 6rem;
+  margin: 0;
+  margin-bottom: 4rem;
+}
+
+.hero-text .highlight,
+.hero-text #typed-text,
+.hero-text .cursor {
+  color: var(--dark);
+}
+
+.hero-text .arrow {
+  color: var(--dark);
+  margin: 0 1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--dark);
+  margin-left: 4px;
+  animation: blink 0.7s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 50%     { opacity: 1; }
+  50.1%, 100% { opacity: 0; }
+}
+
+.hero-subtext {
+  position: absolute;
+  top: 18rem;  
+  font-weight: 600;
+  left: 3rem;
+  right: 3rem;
+  font-size: 1.55rem;
+  line-height: 1.6;
+  color: var(--dark);
+}
+
+.homepage-hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 4rem;
+  background: var(--light);
+}
+
+.homepage-hero-title {
+  font-size: 7rem;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 2rem;
+}
+
+.join-button-wrapper {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.team-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+/* MAIN SECTIONS */
+.stand-for {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.stand-for h2 {
+  font-size: 5.5rem;
+  margin-bottom: 1rem;
+}
+
+.stand-for-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stand-for-list li {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.mission-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem;
+  background-color: var(--light);
+}
+
+.mission-content {
+  display: flex;
+  flex-direction: row; 
+  width: 100%;
+  gap: 4rem;
+  align-items: center;
+}
+
+.mission-image {
+  flex: 1;
+  height: 700px;
+  background: url('../images/FirstEvent.png') center/cover no-repeat;
+  border-radius: 1rem;
+}
+
+.mission-text-container {
+  flex: 1;
+  text-align: left;
+  padding-right: 3rem;
+}
+
+.mission-heading {
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.mission-text {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  color: var(--dark);
+  margin-bottom: 2rem;
+}
+
+.mission-page-content {
+  max-width: 1000px;
+  margin: 4rem auto;
+  padding: 6rem 2rem 2rem 2rem;
+}
+
+.mission-page-content h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.mission-page-content p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--dark);
+}
+
+.core-values-list {
+  list-style-type: disc;
+  padding-left: 2rem;
+  margin-top: 2rem;
+}
+
+.core-values-list li {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.about-hero-image {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  margin: 0 auto 2rem auto;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+/* LEADERSHIP */
+.leadership-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.leadership-heading {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.leadership-year {
+  font-size: 1.5rem;
+  color: var(--gray-dark);
+  margin-bottom: 3rem;
+}
+
+.leadership-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+}
+
+/* CONTACT SECTIONS */
+.contact-leadership-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: var(--light);
+}
+
+.contact-heading {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.contact-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+.contact-email {
+  font-size: 1.25rem;
+  color: var(--gray-dark);
+  margin-bottom: 2rem;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-logo {
+  height: 60px;
+  width: auto;
+}
+
+/* CALENDAR & EMBEDDED CONTENT */
+.calendar-section {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 4rem auto;
+  text-align: center;
+  background: transparent;
+}
+
+.calendar-section h2 {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  color: var(--dark);
+}
+
+.calendar-container {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  height: 0;
+  padding-bottom: 75%;
+  margin: 0 auto;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.calendar-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 1rem;
+}
+
+.calendar-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.opportunities-section {
+  padding: 4rem 2rem;
+  max-width: 1500px;
+  margin: 4rem auto;
+  text-align: center;
+  background: transparent;
+}
+
+.opportunities-container {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  height: 0;
+  padding-bottom: 75%;
+  margin: 0 auto;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.opportunities-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 1rem;
+}
+
+/* TIMELINE LAYOUT */
+.timeline-section {
+  padding: 4rem 2rem 2rem 2rem;
+  position: relative;
+  min-height: 100vh;
+}
+
+.timeline-section h2 {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  color: var(--dark);
+  font-weight: 800;
+  text-align: center;
+  margin-left: 280px;
+  max-width: 800px;
+}

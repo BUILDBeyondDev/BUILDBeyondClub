@@ -1,15 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BUILD Beyond Club</title>
-  <link rel="stylesheet" href="style.css"> 
-</head>
-<body>
-  <div id="nav-placeholder"></div>
+---
+layout: default
+title: "Timeline"
+---
+
+<div class="timeline-section">
+  <h2>Our Timeline</h2>
   
-  <div id="footer-placeholder"></div>
-  <script src="script.js"></script>
-</body>
-</html>
+  <!-- Fixed sidebar with timeline markers -->
+  <div class="timeline-sidebar">
+    <div class="timeline-track">
+      <div class="timeline-progress"></div>
+      <div class="timeline-markers">
+        <div class="timeline-marker active" data-year="2024" style="top: 10%;">
+          <div class="timeline-year">2024</div>
+        </div>
+        <div class="timeline-marker" data-year="2025-jan" style="top: 35%;">
+          <div class="timeline-year">January 2025</div>
+        </div>
+        <div class="timeline-marker" data-year="2025-june" style="top: 60%;">
+          <div class="timeline-year">June 2025</div>
+        </div>
+        <div class="timeline-marker" data-year="2026" style="top: 85%;">
+          <div class="timeline-year">2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content area that flows with page scroll -->
+  <div class="timeline-content">
+    <div class="timeline-item active" data-year="2024">
+      <div class="event-tag">LAUNCH</div>
+      <h3>2024</h3>
+      <p>The start of BUILDBeyond. Our journey began with a vision to create a stronger alumni network that supports each other through community exchange, storytelling, and meaningful connections. This marked the foundation of what would become a thriving community of BUILD Boston alumni dedicated to mutual growth and success.</p>
+    </div>
+
+    <div class="timeline-item" data-year="2025-jan">
+      <div class="event-tag">Guest Speaker</div>
+      <h3>January 2025</h3>
+      <p>Salsify pmx. Our first major guest speaker event brought together alumni and current students for an inspiring session on product management and career development. This event set the tone for our commitment to providing valuable learning opportunities and professional development resources for our community.</p>
+    </div>
+
+    <div class="timeline-item" data-year="2025-june">
+      <div class="event-tag">BUILDFest</div>
+      <h3>June 2025 - First Major Update</h3>
+      <p>BUILDFest! Our signature summer event celebrating the achievements of our alumni community. This festival-style gathering features networking opportunities, workshops, panel discussions, and celebrations of entrepreneurial success stories from within our network. It represents our commitment to fostering both professional growth and community bonds.</p>
+    </div>
+
+    <div class="timeline-item" data-year="2026">
+      <div class="event-tag">COMING SOON</div>
+      <h3>2026</h3>
+      <p>Stay tuned for more info. We're planning exciting new initiatives for 2026, including expanded mentorship programs, scholarship opportunities, and strategic partnerships that will further strengthen our alumni network and impact in the Greater Boston community.</p>
+    </div>
+  </div>
+</div>

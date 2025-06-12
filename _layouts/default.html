@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="keywords" content="BUILD Boston, alumni network, entrepreneurship, youth development, Boston, BUILD Beyond">
+  <meta name="author" content="BUILD Beyond">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:image" content="{{ '/images/BuildLogo.svg' | absolute_url }}">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ page.url | absolute_url }}">
+  <meta property="twitter:title" content="{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}">
+  <meta property="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="twitter:image" content="{{ '/images/BuildLogo.svg' | absolute_url }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/images/BuildLogo.svg' | relative_url }}">
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="{{ '/styles/variables.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/styles/navigation.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/styles/components.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/styles/layout.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/styles/mobile.css' | relative_url }}">
+  
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PH7J3H7GWT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PH7J3H7GWT');
+  </script>
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BUILD Beyond",
+    "url": "{{ site.url }}",
+    "logo": "{{ '/images/BuildLogo.svg' | absolute_url }}",
+    "description": "{{ site.description }}",
+    "sameAs": [
+      "https://groupme.com/join_group/107129513/bxBZJCpu"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  {% include nav.html %}
+
+  <main role="main">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <!-- JavaScript files -->
+  <script src="{{ '/js/utils.js' | relative_url }}"></script>
+  <script src="{{ '/js/carousel.js' | relative_url }}"></script>
+  <script src="{{ '/js/navigation.js' | relative_url }}"></script>
+  <script src="{{ '/js/timeline.js' | relative_url }}"></script>
+  <script src="{{ '/js/analytics.js' | relative_url }}"></script>
+  <script src="{{ '/js/performance.js' | relative_url }}"></script>
+  <script src="{{ '/js/main.js' | relative_url }}"></script>
+</body>
+</html>
