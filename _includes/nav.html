@@ -1,12 +1,12 @@
 <header class="navbar">
   <div class="logo-container">
-    <img src="images/NewBUILDLOGO.svg" alt="BUILD Beyond Logo">
+    <img src="{{ '/images/NewBUILDLOGO.svg' | relative_url }}" alt="BUILD Beyond Logo">
     <span class="site-title">BUILD BEYOND</span>
   </div>
   <button id="nav-toggle" aria-label="Open menu">&#9776;</button>
   <div class="nav-overlay"></div>
   <nav class="nav-links">
-    <a href="index.html">Home</a>
+    <a href="{{ '/' | relative_url }}">Home</a>
     <div class="dropdown">
       <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
         About
@@ -17,8 +17,8 @@
         </svg>
       </button>
       <div class="dropdown-content">
-        <a href="about-mission.html">Mission</a>
-        <a href="about-team.html">Team</a>
+        <a href="{{ '/about-mission/' | relative_url }}">Mission</a>
+        <a href="{{ '/about-team/' | relative_url }}">Team</a>
       </div>
     </div>
     <div class="dropdown">
@@ -31,9 +31,9 @@
         </svg>
       </button>
       <div class="dropdown-content">
-        <a href="timeline.html">Timeline</a>
-        <a href="index.html#calendar">Calendar</a>
-        <a href="opportunities.html">Scholarships &Internships</a>
+        <a href="{{ '/timeline/' | relative_url }}">Timeline</a>
+        <a href="{{ '/#calendar' | relative_url }}">Calendar</a>
+        <a href="{{ '/opportunities/' | relative_url }}">Scholarships &amp; Internships</a>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
     </div>
 
     <div class="join-container">
-      <a href="rsvp.html" class="rsvp-link">RSVP</a>
+      <a href="{{ '/rsvp/' | relative_url }}" class="rsvp-link">RSVP</a>
     </div>
 
   </nav>
