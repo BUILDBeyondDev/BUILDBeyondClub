@@ -122,12 +122,10 @@ function initializeTimeline() {
       marker.innerHTML = `<div class="timeline-year">${item.displayDate}</div>`;
       markersContainer.appendChild(marker);
 
-      // Create timeline item
       const timelineItem = document.createElement('div');
       timelineItem.className = `timeline-item ${index === 0 ? 'active' : ''}`;
       timelineItem.dataset.year = item.yearId;
 
-      // Create image gallery HTML from iframe embeds
       let imageGalleryHTML = '';
       if (item.images.length > 0) {
         const galleryImages = item.images.map(iframeCode => {
