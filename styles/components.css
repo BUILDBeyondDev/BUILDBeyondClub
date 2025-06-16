@@ -247,11 +247,18 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  border: none;
 }
 
 .timeline-gallery-image:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* Ensure iframes fit properly in the gallery */
+.timeline-image-gallery iframe.timeline-gallery-image {
+  object-fit: cover;
+  border: 1px solid var(--gray-light);
 }
 
 /* Mobile responsive gallery */
