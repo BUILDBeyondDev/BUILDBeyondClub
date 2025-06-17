@@ -232,7 +232,7 @@
   font-size: 0.8rem;
 }
 
-/* TIMELINE IMAGE GALLERY */
+/* TIMELINE IMAGE GALLERY - Updated for proper img tags */
 .timeline-image-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -250,6 +250,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   border: none;
+  display: block;
 }
 
 .timeline-gallery-image:hover {
@@ -257,8 +258,8 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
-/* Ensure iframes fit properly in the gallery */
-.timeline-image-gallery iframe.timeline-gallery-image {
+/* Remove iframe-specific styles since we're using img tags now */
+.timeline-image-gallery img.timeline-gallery-image {
   object-fit: cover;
   border: 1px solid var(--gray-light);
 }
