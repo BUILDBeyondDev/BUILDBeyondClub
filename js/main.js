@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.initializeTimeline === 'function') {
       window.initializeTimeline();
     }
+    
+    // Initialize lightbox for timeline images
+    if (typeof window.initializeLightbox === 'function') {
+      // Small delay to ensure timeline is fully loaded
+      setTimeout(() => {
+        window.initializeLightbox();
+      }, 100);
+    }
   }
 
   // Initialize analytics tracking
