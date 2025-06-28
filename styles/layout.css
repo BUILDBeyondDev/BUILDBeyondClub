@@ -88,21 +88,21 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .button-row {
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
 }
 
-/* Single button in second row should be centered */
+/* All buttons aligned to the left */
 .button-row:last-child {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .team-hero {
