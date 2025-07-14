@@ -13,10 +13,10 @@
 
 .mission-button:hover {
   background-color: rgb(75, 130, 179);
-}
+}  
 
 
-/*Calendar stuff*/
+/*Calendar New*/
 .calendar-button {
   display: inline-block;
   padding: 1rem 2rem;
