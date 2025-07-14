@@ -525,3 +525,78 @@
     margin-top: 0.8rem;
   }
 }
+
+.stats-section {
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+  background: var(--light);
+  padding: 3rem 0;
+  margin: 4rem 0;
+}
+
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+  text-align: center;
+}
+
+.stat-item {
+  color: var(--dark);
+}
+
+.stat-number {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  color: var(--blue);
+  font-family: 'Poppins', sans-serif;
+}
+
+.stat-label {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray-dark);
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Stuff for mobile */
+@media (max-width: 768px) {
+  .stats-section {
+    padding: 2rem 0;
+    margin: 2rem 0;
+  }
+  
+  .stats-container {
+    padding: 0 1rem;
+  }
+  
+  .stats-grid {
+    gap: 2rem;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
