@@ -435,36 +435,6 @@
   border-radius: 1rem;
 }
 
-/* TIMELINE LAYOUT - CENTERED VERSION */
-.timeline-section {
-  padding: 4rem 2rem 2rem 2rem;
-  position: relative;
-  min-height: 100vh;
-}
-
-.timeline-section h2 {
-  font-size: 5rem;
-  margin-bottom: 3rem;
-  color: var(--dark);
-  font-weight: 800;
-  text-align: center;
-  /* Center in remaining space after sidebar */
-  margin-left: max(280px, calc(50% - 300px));
-  margin-right: 2rem;
-  max-width: 800px;
-}
-
-/* COMPLETE TIMELINE CENTERING - CENTERS ENTIRE TIMELINE AS A UNIT */
-/* COMPLETE TIMELINE CENTERING */
-.timeline-section {
-  padding: 4rem 2rem 2rem 2rem;
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .timeline-section h2 {
   font-size: 5rem;
   margin-bottom: 3rem;
