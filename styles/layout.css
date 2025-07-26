@@ -454,11 +454,183 @@
   max-width: 800px;
 }
 
-/* TIMELINE CONTENT - PERFECTLY CENTERED */
+/* COMPLETE TIMELINE CENTERING - CENTERS ENTIRE TIMELINE AS A UNIT */
+
+.timeline-section {
+  padding: 4rem 2rem 2rem 2rem;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the entire timeline */
+}
+
+.timeline-section h2 {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  color: var(--dark);
+  font-weight: 800;
+  text-align: center;
+  margin-left: 0; /* Remove the offset */
+  margin-right: 0;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Create a container that holds both sidebar and content */
+.timeline-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 1200px; /* Total width of timeline + content */
+  margin: 0 auto; /* Center the entire timeline unit */
+}
+
+/* TIMELINE SIDEBAR - Now positioned relative to container */
+.timeline-sidebar {
+  position: sticky; /* Changed from fixed */
+  top: 50vh;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 400px;
+  z-index: 100;
+  flex-shrink: 0; /* Prevent shrinking */
+  margin-right: 2rem; /* Space between sidebar and content */
+}
+
+.timeline-track {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: var(--gray-light);
+  margin-left: 100px;
+  border-radius: 1px;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--blue);
+  border-radius: 2px;
+  transition: height 0.3s ease;
+}
+
+.timeline-markers {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 100%;
+}
+
+.timeline-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--light);
+  border: 2px solid var(--gray-light);
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.timeline-marker.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 0 4px rgba(27, 145, 255, 0.2);
+}
+
+.timeline-year {
+  position: absolute;
+  left: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gray-dark);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  width: 80px;
+  text-align: right;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.timeline-marker.active .timeline-year {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* TIMELINE CONTENT - Now flows next to sidebar */
 .timeline-content {
-  /* Center content in the space after sidebar */
-  margin-left: max(280px, calc(50% - 400px));
-  margin-right: 2rem;
+  flex: 1; /* Takes remaining space */
   padding: 2rem;
   max-width: 800px;
+  margin: 0; /* Remove all margins */
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .timeline-container {
+    max-width: 900px;
+  }
+  
+  .timeline-content {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-section {
+    padding: 2rem 1rem;
+  }
+  
+  .timeline-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .timeline-sidebar {
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+    height: 200px;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+  
+  .timeline-track {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .timeline-section h2 {
+    font-size: 3rem;
+  }
+  
+  .timeline-content {
+    max-width: 100%;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-section h2 {
+    font-size: 2.5rem;
+  }
+  
+  .timeline-sidebar {
+    height: 150px;
+  }
 }
