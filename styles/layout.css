@@ -434,6 +434,15 @@
   border: 0;
   border-radius: 1rem;
 }   
+/* TIMELINE LAYOUT - COMPLETE CENTERED VERSION WITH FIXED SIDEBAR */
+.timeline-section {
+  padding: 4rem 2rem 2rem 2rem;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .timeline-section h2 {
   font-size: 5rem;
@@ -454,47 +463,235 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: flex-start; /* Important: align to top */
 }
 
-/* TIMELINE SIDEBAR - Now positioned relative to container */
+/* TIMELINE SIDEBAR - Fixed positioning that actually works */
 .timeline-sidebar {
-  position: sticky;
-  top: 50vh;
+  position: fixed;
+  left: calc(50% - 600px + 2rem); /* Position relative to centered container */
+  top: 50%;
   transform: translateY(-50%);
   width: 200px;
   height: 400px;
   z-index: 100;
-  flex-shrink: 0;
-  margin-right: 2rem;
 }
 
-/* TIMELINE CONTENT - Now flows next to sidebar */
+/* Fallback for smaller screens */
+@media (max-width: 1300px) {
+  .timeline-sidebar {
+    left: 2rem; /* Fallback to left edge */
+  }
+}
+
+.timeline-track {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: var(--gray-light);
+  margin-left: 100px;
+  border-radius: 1px;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--blue);
+  border-radius: 2px;
+  transition: height 0.3s ease;
+}
+
+.timeline-markers {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 100%;
+}
+
+.timeline-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--light);
+  border: 2px solid var(--gray-light);
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.timeline-marker.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 0 4px rgba(27, 145, 255, 0.2);
+}
+
+.timeline-year {
+  position: absolute;
+  left: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gray-dark);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  width: 80px;
+  text-align: right;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.timeline-marker.active .timeline-year {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* TIMELINE CONTENT - Flows next to where sidebar would be */
 .timeline-content {
   flex: 1;
   padding: 2rem;
   max-width: 800px;
   margin: 0;
+  margin-left: 220px; /* Space for sidebar */
+}
+
+.timeline-item {
+  margin-bottom: 12rem;
+  padding: 3rem 2rem;
+  background: transparent;
+  border-radius: 0;
+  opacity: 0.6;
+  transform: translateX(20px);
+  transition: all 0.4s ease;
+  min-height: 300px;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 8rem;
+}
+
+.timeline-item.active {
+  opacity: 1;
+  transform: translateX(0);
+  background: rgba(27, 145, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--blue);
+  box-shadow: 0 4px 20px rgba(27, 145, 255, 0.1);
+}
+
+.timeline-item h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+
+.timeline-item p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--dark);
+}
+
+.timeline-item .event-tag {
+  display: inline-block;
+  background: var(--blue);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* TIMELINE IMAGE GALLERY */
+.timeline-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  max-width: 600px;
+}
+
+.timeline-gallery-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: none;
+  display: block;
+}
+
+.timeline-gallery-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
 /* Mobile responsive */
+@media (max-width: 1024px) {
+  .timeline-container {
+    max-width: 900px;
+  }
+  
+  .timeline-content {
+    max-width: 600px;
+    margin-left: 180px;
+  }
+}
+
 @media (max-width: 768px) {
+  .timeline-section {
+    padding: 2rem 1rem;
+  }
+  
+  .timeline-section h2 {
+    font-size: 3rem;
+  }
+  
+  /* Hide sidebar on mobile and center content */
+  .timeline-sidebar {
+    display: none;
+  }
+  
   .timeline-container {
     flex-direction: column;
     align-items: center;
   }
   
-  .timeline-sidebar {
-    position: relative;
-    top: auto;
-    transform: none;
-    width: 100%;
-    height: 200px;
-    margin-right: 0;
-    margin-bottom: 2rem;
-  }
-  
   .timeline-content {
     max-width: 100%;
     padding: 1rem;
+    margin-left: 0; /* Remove sidebar spacing on mobile */
+  }
+  
+  .timeline-image-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
+  }
+  
+  .timeline-gallery-image {
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-section h2 {
+    font-size: 2.5rem;
   }
 }
