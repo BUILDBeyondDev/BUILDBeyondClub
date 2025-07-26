@@ -488,7 +488,7 @@
 
 /* TIMELINE SIDEBAR - Now positioned relative to container */
 .timeline-sidebar {
-  position: fixed; /* Changed from fixed */
+  position: sticky; /* Changed from fixed */
   top: 50vh;
   transform: translateY(-50%);
   width: 200px;
