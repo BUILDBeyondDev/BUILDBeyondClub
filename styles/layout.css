@@ -435,7 +435,7 @@
   border-radius: 1rem;
 }
 
-/* TIMELINE LAYOUT */
+/* TIMELINE LAYOUT - CENTERED VERSION */
 .timeline-section {
   padding: 4rem 2rem 2rem 2rem;
   position: relative;
@@ -448,13 +448,17 @@
   color: var(--dark);
   font-weight: 800;
   text-align: center;
-  margin-left: 280px;
+  /* Center in remaining space after sidebar */
+  margin-left: max(280px, calc(50% - 300px));
+  margin-right: 2rem;
   max-width: 800px;
 }
 
-/* TIMELINE CONTENT - now flows with main page */
+/* TIMELINE CONTENT - PERFECTLY CENTERED */
 .timeline-content {
-  margin-left: 280px;
+  /* Center content in the space after sidebar */
+  margin-left: max(280px, calc(50% - 400px));
+  margin-right: 2rem;
   padding: 2rem;
   max-width: 800px;
 }
