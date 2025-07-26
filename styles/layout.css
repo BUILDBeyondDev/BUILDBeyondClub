@@ -434,7 +434,7 @@
   border: 0;
   border-radius: 1rem;
 }   
-/* TIMELINE LAYOUT - COMPLETE CENTERED VERSION WITH FIXED SIDEBAR */
+/* TIMELINE LAYOUT - COMPLETE CENTERED VERSION WITH BETTER MOBILE */
 .timeline-section {
   padding: 4rem 2rem 2rem 2rem;
   position: relative;
@@ -463,13 +463,13 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  align-items: flex-start; /* Important: align to top */
+  align-items: flex-start;
 }
 
 /* TIMELINE SIDEBAR - Fixed positioning that actually works */
 .timeline-sidebar {
   position: fixed;
-  left: calc(50% - 600px + 2rem); /* Position relative to centered container */
+  left: calc(50% - 600px + 2rem);
   top: 50%;
   transform: translateY(-50%);
   width: 200px;
@@ -480,7 +480,7 @@
 /* Fallback for smaller screens */
 @media (max-width: 1300px) {
   .timeline-sidebar {
-    left: 2rem; /* Fallback to left edge */
+    left: 2rem;
   }
 }
 
@@ -563,7 +563,7 @@
   padding: 2rem;
   max-width: 800px;
   margin: 0;
-  margin-left: 220px; /* Space for sidebar */
+  margin-left: 220px;
 }
 
 .timeline-item {
@@ -643,7 +643,7 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
-/* Mobile responsive */
+/* Mobile responsive - IMPROVED VERSION */
 @media (max-width: 1024px) {
   .timeline-container {
     max-width: 900px;
@@ -662,27 +662,91 @@
   
   .timeline-section h2 {
     font-size: 3rem;
-  }
-  
-  /* Hide sidebar on mobile and center content */
-  .timeline-sidebar {
-    display: none;
+    margin-bottom: 2rem;
   }
   
   .timeline-container {
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
   
+  /* MOBILE TIMELINE - Show simplified vertical line */
+  .timeline-sidebar {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    transform: none;
+    width: 40px;
+    height: 100%;
+    z-index: 10;
+  }
+  
+  .timeline-track {
+    margin-left: 20px;
+    height: 100%;
+  }
+  
+  /* Hide the markers on mobile but keep the progress line */
+  .timeline-markers {
+    display: none;
+  }
+  
+  /* MOBILE CONTENT STYLING */
   .timeline-content {
+    width: 100%;
     max-width: 100%;
     padding: 1rem;
-    margin-left: 0; /* Remove sidebar spacing on mobile */
+    margin-left: 3rem; /* Space for the simple timeline line */
+    position: relative;
+  }
+  
+  /* Add mobile timeline dots directly on content */
+  .timeline-item {
+    margin-bottom: 4rem;
+    padding: 2rem 1.5rem;
+    position: relative;
+    opacity: 1; /* Always visible on mobile */
+    transform: none;
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    background: rgba(27, 145, 255, 0.03);
+  }
+  
+  /* Mobile timeline dot */
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 2rem;
+    width: 12px;
+    height: 12px;
+    background: var(--blue);
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--blue);
+    z-index: 5;
+  }
+  
+  .timeline-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .timeline-item .event-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
   }
   
   .timeline-image-gallery {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.3rem;
+    margin-top: 1rem;
   }
   
   .timeline-gallery-image {
@@ -691,7 +755,36 @@
 }
 
 @media (max-width: 480px) {
+  .timeline-section {
+    padding: 1rem 0.5rem;
+  }
+  
   .timeline-section h2 {
     font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-content {
+    margin-left: 2rem;
+    padding: 0.5rem;
+  }
+  
+  .timeline-item {
+    padding: 1.5rem 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-item::before {
+    left: -1.5rem;
+    width: 10px;
+    height: 10px;
+  }
+  
+  .timeline-item h3 {
+    font-size: 1.3rem;
+  }
+  
+  .timeline-image-gallery {
+    grid-template-columns: 1fr;
   }
 }
